@@ -1,0 +1,34 @@
+// Use dbdiagram.io
+
+// Creating tables
+Table Customer as C {
+  Cusomter_id varchar  [pk]
+  Country varchar
+}
+
+Table Invoice as I {
+  InvoiceNo int  [pk]
+  Cusomter_id varchar
+  InvoiceDate timestamp
+}
+
+Table stock_code as S {
+  Id_stock int [pk]
+  StockCode varchar 
+  UnitPrice double
+  Description varchar
+  Quantity int
+ }
+ 
+Table invoice_stock as is{
+   Id_invoice_stock int [pk]
+   InvoiceNo int
+   Id_stock int
+}
+
+// Creating references
+// You can also define relaionship separately
+// > many-to-one; < one-to-many; - one-to-one
+Ref: C.Cusomter_id < I.Cusomter_id  
+Ref: I.InvoiceNo < is.InvoiceNo
+Ref: is.Id_stock > S.Id_stock

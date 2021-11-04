@@ -1,0 +1,302 @@
+swagger: '2.0'
+info:
+  description: This is the API for the `SmartHome` Data Engineering project.
+  version: 1.0.0
+  title: SmartHome API
+tags:
+  - name: universal
+    description: validates if consumption is json
+  - name: energy
+    description: validates energy related data
+  - name: weather
+    description: validates weather related data
+schemes:
+  - https
+  - http
+paths:
+  /write:
+    post:
+      tags:
+        - universal
+      summary: Validates all data as json and writes data into pub/sub
+      operationId: '0'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: SmartHome data object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Universal'
+      responses:
+        '200':
+          description: json validated
+        '400':
+          description: Invalid schema types
+        '500':
+          description: Internal Server Error
+  /write/energy:
+    post:
+      tags:
+        - energy
+      summary: Validates energy data as json and writes data into pub/sub
+      operationId: '01'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Energy data object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Energy'
+      responses:
+        '200':
+          description: json validated
+        '400':
+          description: Invalid schema types
+        '500':
+          description: Internal Server Error
+  /write/weather:
+    post:
+      tags:
+        - weather
+      summary: Validates weather data as json and writes data into pub/sub
+      operationId: '02'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Weather data object that needs to be added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Weather'
+      responses:
+        '200':
+          description: json validated
+        '400':
+          description: Invalid schema types
+        '500':
+          description: Internal Server Error
+  /getdata/{house_id}:
+    get:
+      tags:
+        - universal
+      summary: Gets data from datastore
+      parameters:
+        - name: house_id
+          required: true
+          in: path
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: data retreived
+          schema:
+            $ref: '#/definitions/Universal'
+        '400':
+          description: Invalid schema types
+          schema:
+            $ref: '#/definitions/Universal'
+definitions:
+  Universal:
+    type: object
+    properties:
+      use [kW]:
+        type: number
+        format: double
+      gen [kW]:
+        type: number
+        format: double
+      House overall [kW]:
+        type: number
+        format: double
+      Dishwasher [kW]:
+        type: number
+        format: double
+      Furnace 1 [kW]:
+        type: number
+        format: double
+      Furnace 2 [kW]:
+        type: number
+        format: double
+      Home office [kW]:
+        type: number
+        format: double
+      Fridge [kW]:
+        type: number
+        format: double
+      Wine cellar [kW]:
+        type: number
+        format: double
+      Garage door [kW]:
+        type: number
+        format: double
+      Kitchen 12 [kW]:
+        type: number
+        format: double
+      Kitchen 14 [kW]:
+        type: number
+        format: double
+      Kitchen 38 [kW]:
+        type: number
+        format: double
+      Barn [kW]:
+        type: number
+        format: double
+      Well [kW]:
+        type: number
+        format: double
+      Microwave [kW]:
+        type: number
+        format: double
+      Living room [kW]:
+        type: number
+        format: double
+      Solar [kW]:
+        type: number
+        format: double
+      temperature:
+        format: double
+        type: number
+      icon:
+        format: string
+        type: string
+      humidity:
+        format: double
+        type: number
+      visibiulity:
+        format: double
+        type: number        
+      summary:
+        format: string
+        type: string
+      apparentTemperature:
+        format: double
+        type: number
+      pressure:
+        format: double
+        type: number
+      windSpeed:
+        format: double
+        type: number
+      cloudCover:
+        format: double
+        type: number
+      windBearing:
+        format: double
+        type: number
+      precipIntensity:
+        format: double
+        type: number
+      dewPoint:
+        format: double
+        type: number
+      precipProbability:
+        format: double
+        type: number
+      house_id:
+        format: integer
+        type: number
+  Energy:
+    type: object
+    properties:
+      use [kW]:
+        type: number
+        format: double
+      gen [kW]:
+        type: number
+        format: double
+      House overall [kW]:
+        type: number
+        format: double
+      Dishwasher [kW]:
+        type: number
+        format: double
+      Furnace 1 [kW]:
+        type: number
+        format: double
+      Furnace 2 [kW]:
+        type: number
+        format: double
+      Home office [kW]:
+        type: number
+        format: double
+      Fridge [kW]:
+        type: number
+        format: double
+      Wine cellar [kW]:
+        type: number
+        format: double
+      Garage door [kW]:
+        type: number
+        format: double
+      Kitchen 12 [kW]:
+        type: number
+        format: double
+      Kitchen 14 [kW]:
+        type: number
+        format: double
+      Kitchen 38 [kW]:
+        type: number
+        format: double
+      Barn [kW]:
+        type: number
+        format: double
+      Well [kW]:
+        type: number
+        format: double
+      Microwave [kW]:
+        type: number
+        format: double
+      Living room [kW]:
+        type: number
+        format: double
+      Solar [kW]:
+        type: number
+        format: double
+  Weather:
+    type: object
+    properties:
+      temperature:
+        format: double
+        type: number
+      icon:
+        format: string
+        type: string
+      humidity:
+        format: double
+        type: number
+      visibiulity:
+        format: double
+        type: number        
+      summary:
+        format: string
+        type: string
+      apparentTemperature:
+        format: double
+        type: number
+      pressure:
+        format: double
+        type: number
+      windSpeed:
+        format: double
+        type: number
+      cloudCover:
+        format: double
+        type: number
+      windBearing:
+        format: double
+        type: number
+      precipIntensity:
+        format: double
+        type: number
+      dewPoint:
+        format: double
+        type: number
+      precipProbability:
+        format: double
+        type: number
